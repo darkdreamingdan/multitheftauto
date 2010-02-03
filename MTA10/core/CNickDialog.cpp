@@ -28,7 +28,7 @@ CNickDialog::CNickDialog ( void )
     m_pNickWindow->SetPosition ( CVector2D ( resolution.fX / 2 - 280.0f / 2, resolution.fY / 2 - 105.0f / 2  ), false );
     m_pNickWindow->SetSize ( CVector2D ( 280.0f, 105.0f ), false );
     m_pNickWindow->SetSizingEnabled ( false );
-	m_pNickWindow->SetAlwaysOnTop ( true );
+    m_pNickWindow->SetAlwaysOnTop ( true );
 
     // Create the controls
     float fButtonWidth = (280.0f - 30.0f) / 2;
