@@ -638,7 +638,7 @@ bool CElement::GetCustomDataBool ( const char* szName, bool& bOut, bool bInherit
 }
 
 
-void CElement::SetCustomData ( const char* szName, const CLuaArgument& Variable, CLuaMain* pLuaMain, bool bSynchronized )
+void CElement::SetCustomData ( const char* szName, const CLuaArgument& Variable, CLuaMain* pLuaMain, bool bSynchronized, CPlayer* pClient )
 {
     assert ( szName );
 
@@ -650,14 +650,17 @@ void CElement::SetCustomData ( const char* szName, const CLuaArgument& Variable,
         oldVariable = pData->Variable;
     }
 
-    // Set the new data
-    m_pCustomData->Set ( szName, Variable, pLuaMain, bSynchronized );
-
     // Trigger the onElementDataChange event on us
     CLuaArguments Arguments;
     Arguments.PushString ( szName );
     Arguments.PushArgument ( oldVariable  );
-    CallEvent ( "onElementDataChange", Arguments );
+    if ( !CallEvent ( "onElementDataChange", Arguments, pClient ) ) //Was the event cancelled?
+    {
+        return;
+    }
+
+    // Set the new data
+    m_pCustomData->Set ( szName, Variable, pLuaMain, bSynchronized );
 }
 
 
